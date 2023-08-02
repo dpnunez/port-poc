@@ -1,7 +1,7 @@
 export function Root() {
   return (
-    <header>
-      <h1 className="text-7xl">DP</h1>
+    <header className="container mx-auto h-auto py-8">
+      <h1 className="text-4xl font-extrabold">dp</h1>
     </header>
   )
 }
