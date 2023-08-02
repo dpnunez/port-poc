@@ -29,7 +29,7 @@ const borderStyles =
 const dynamicBorderBottom =
   'after:bg-gradient-menu bg after:top-[1px] after:left-0 after:z-[-1]'
 const baseMenuRoot =
-  'menu-root fixed border-[1px] rounded-full border-zinc-700 z-20'
+  'menu-root absolute border-[1px] rounded-full border-zinc-700 z-20 '
 
 const Item = forwardRef<HTMLButtonElement, ItemProps>(
   ({ children, onChange, active }, ref) => {
@@ -38,7 +38,7 @@ const Item = forwardRef<HTMLButtonElement, ItemProps>(
         onClick={onChange}
         ref={ref}
         className={clsxm(
-          'px-4 py-1 cursor-pointer z-10 text-zinc-400 transition-colors',
+          'whitespace-nowrap px-4 py-2 cursor-pointer z-10 text-zinc-400 transition-colors',
           active && 'text-white',
         )}
       >
