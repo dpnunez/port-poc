@@ -28,8 +28,7 @@ const borderStyles =
   "after:content-[''] after:absolute after:rounded-full after:w-full after:h-full after:bg-red after:pointer-events-none"
 const dynamicBorderBottom =
   'after:bg-gradient-menu bg after:top-[1px] after:left-0 after:z-[-1]'
-const baseMenuRoot =
-  'menu-root absolute border-[1px] rounded-full border-zinc-700 z-20 '
+const baseMenuRoot = 'menu-root border-[1px] rounded-full border-zinc-700 z-20 '
 
 const Item = forwardRef<HTMLButtonElement, ItemProps>(
   ({ children, onChange, active }, ref) => {
@@ -52,7 +51,7 @@ Item.displayName = 'Menu Item'
 
 function TopFlare() {
   return (
-    <div className="h-[1px] absolute top-[-1px] w-[80%] left-8 z-[-1] bg-red bg-gradient-to-l from-zinc-700 from-10% via-zinc-500 to-zinc-700 to-90%" />
+    <div className="h-[1px] absolute top-[1px] w-[80%] left-8 z-10 bg-red bg-gradient-to-l from-zinc-700 from-10% via-zinc-500 to-zinc-700 to-90%" />
   )
 }
 
@@ -100,36 +99,41 @@ export function Root() {
   }, [])
 
   return (
-    <nav
-      className={`${clsxm(
-        baseMenuRoot,
-        borderStyles,
-        dynamicBorderBottom,
-      )} ${css({
-        ':after': {
-          backgroundPositionX: getBackgroundPositionMenu(data.length, current),
-          transition: 'background-position-x 0.6s ease-in-out',
-        },
-      })}`}
-    >
-      <TopFlare />
-      <div
-        className={clsxm(
-          'relative flex gap-1 p-1 box-border bg-zinc-900 rounded-full overflow-hidden',
-        )}
+    <div className="absolute rounded-full overflow-hidden p-[1px] ">
+      <nav
+        className={`${clsxm(
+          baseMenuRoot,
+          borderStyles,
+          dynamicBorderBottom,
+        )} ${css({
+          ':after': {
+            backgroundPositionX: getBackgroundPositionMenu(
+              data.length,
+              current,
+            ),
+            transition: 'background-position-x 0.6s ease-in-out',
+          },
+        })}`}
       >
-        {data.map((item, index) => (
-          <Item
-            active={index === current}
-            key={index}
-            ref={refs[index]}
-            onChange={() => setCurrent(index)}
-          >
-            {item.label}
-          </Item>
-        ))}
-        {itemsCoordinates && <Indicator {...currentCoordinates} />}
-      </div>
-    </nav>
+        <TopFlare />
+        <div
+          className={clsxm(
+            'relative flex gap-1 p-1 box-border bg-zinc-900 rounded-full overflow-hidden',
+          )}
+        >
+          {data.map((item, index) => (
+            <Item
+              active={index === current}
+              key={index}
+              ref={refs[index]}
+              onChange={() => setCurrent(index)}
+            >
+              {item.label}
+            </Item>
+          ))}
+          {itemsCoordinates && <Indicator {...currentCoordinates} />}
+        </div>
+      </nav>
+    </div>
   )
 }
