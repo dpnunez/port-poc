@@ -1,15 +1,16 @@
 interface MenuItem {
   label: string
-  to: string
+  id: string
 }
 
 export const menuData = [
   {
-    label: 'lorem ipsum',
-    to: '/#hero',
+    label: 'Hero',
+    id: 'hero',
   },
   {
-    label: 'dol ipsum',
+    label: 'About',
+    id: 'about',
   },
   {
     label: 'lorem',

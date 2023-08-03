@@ -81,6 +81,11 @@ export function Root() {
 
   const refs = useMemo(() => data.map(() => createRef<HTMLButtonElement>()), [])
 
+  function scrollToId(id: string) {
+    const element = document.getElementById(id)
+    element?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   useEffect(() => {
     const coordinates: coodinates[] = []
     refs.forEach((ref) => {
@@ -126,7 +131,10 @@ export function Root() {
               active={index === current}
               key={index}
               ref={refs[index]}
-              onChange={() => setCurrent(index)}
+              onChange={() => {
+                setCurrent(index)
+                scrollToId(item.id)
+              }}
             >
               {item.label}
             </Item>

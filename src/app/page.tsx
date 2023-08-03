@@ -8,6 +8,7 @@ export default function Home() {
       <div className="sticky top-4 flex justify-center">
         <Navigation.Root />
       </div>
+      <div id="about">about</div>
       <footer className="">FOOTER</footer>
     </main>
   )
