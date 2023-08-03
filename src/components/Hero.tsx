@@ -1,8 +1,9 @@
 'use client'
 
+import { useSectionInScreen } from '@/hooks'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 interface coodinates {
   x: number
@@ -14,8 +15,12 @@ interface coodinates {
 type StateType = { [key: string]: coodinates }
 
 export function Root() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const teste = useSectionInScreen(containerRef, 'hero')
+
   return (
     <div
+      ref={containerRef}
       className="min-h-[80vh] flex flex-col items-center justify-center max-w-full overflow-hidden"
       id="hero"
     >

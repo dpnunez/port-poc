@@ -1,4 +1,4 @@
-import { Header, Hero, Navigation } from '@/components'
+import { About, Header, Hero, Navigation } from '@/components'
 
 export default function Home() {
   return (
@@ -8,7 +8,7 @@ export default function Home() {
       <div className="sticky top-4 flex justify-center">
         <Navigation.Root />
       </div>
-      <div id="about">about</div>
+      <About.Root />
       <footer className="">FOOTER</footer>
     </main>
   )

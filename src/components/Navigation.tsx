@@ -11,6 +11,7 @@ import {
 } from 'react'
 import { motion } from 'framer-motion'
 import { menuData as data } from '@/constants'
+import { useNavigation } from '@/context'
 
 interface ItemProps {
   children: ReactNode
@@ -73,11 +74,19 @@ function Indicator({ x, height, width }: coodinates) {
 }
 
 export function Root() {
-  const [current, setCurrent] = useState(0)
+  const [stack, setCurrent] = useNavigation((state) => [
+    state.activeStack,
+    state.pushActiveStack,
+  ])
+  const current = stack.slice(-1)[0]
+
   const [itemsCoordinates, setItemsCoordinates] = useState<coodinates[] | null>(
     null,
   )
-  const currentCoordinates = itemsCoordinates?.[current] as coodinates
+
+  const currentIndex = data.findIndex((item) => item.id === current)
+
+  const currentCoordinates = itemsCoordinates?.[currentIndex] as coodinates
 
   const refs = useMemo(() => data.map(() => createRef<HTMLButtonElement>()), [])
 
@@ -114,7 +123,7 @@ export function Root() {
           ':after': {
             backgroundPositionX: getBackgroundPositionMenu(
               data.length,
-              current,
+              currentIndex,
             ),
             transition: 'background-position-x 0.6s ease-in-out',
           },
@@ -128,11 +137,11 @@ export function Root() {
         >
           {data.map((item, index) => (
             <Item
-              active={index === current}
+              active={item.id === current}
               key={index}
               ref={refs[index]}
               onChange={() => {
-                setCurrent(index)
+                setCurrent(item.id)
                 scrollToId(item.id)
               }}
             >

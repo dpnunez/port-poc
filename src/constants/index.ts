@@ -13,9 +13,11 @@ export const menuData = [
     id: 'about',
   },
   {
-    label: 'lorem',
+    label: 'Projects',
+    id: 'projects',
   },
   {
-    label: 'lorem ipsum',
+    label: 'Contact',
+    id: 'contact',
   },
 ] as MenuItem[]
