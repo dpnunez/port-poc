@@ -25,6 +25,10 @@ interface coodinates {
   height: number
 }
 
+interface CoordinatesState {
+  [key: string]: coodinates
+}
+
 const borderStyles =
   "after:content-[''] after:absolute after:rounded-full after:w-full after:h-full after:bg-red after:pointer-events-none"
 const dynamicBorderBottom =
@@ -60,13 +64,14 @@ function Indicator({ x, height, width }: coodinates) {
   return (
     <>
       <motion.div
+        data-test={Number(x + width / 2 - 20).toFixed(0)}
         className="bg-white absolute rounded-full blur-[32px] w-10 h-10"
-        animate={{ x: x + width / 2 - 20 }}
+        animate={{ x: Number(Number(x + width / 2 - 20).toFixed(0)) || 0 }}
         transition={{ type: 'spring', damping: 15 }}
       />
       <motion.div
         className="bg-white opacity-20 absolute w-4 h-full rounded-full"
-        animate={{ x: x - 4, height, width }}
+        animate={{ x: Number(Number(x - 4).toFixed(0)) || 0, height, width }}
         transition={{ type: 'spring', damping: 15 }}
       />
     </>
@@ -80,15 +85,22 @@ export function Root() {
   ])
   const current = stack.slice(-1)[0]
 
-  const [itemsCoordinates, setItemsCoordinates] = useState<coodinates[] | null>(
-    null,
+  const [itemsCoordinates, setItemsCoordinates] =
+    useState<CoordinatesState | null>(null)
+
+  const currentCoordinates = itemsCoordinates?.[current] as coodinates
+
+  const refs = useMemo(
+    () =>
+      data.reduce(
+        (acc, current) => ({
+          ...acc,
+          [current.id]: createRef<HTMLButtonElement>(),
+        }),
+        {} as { [key: string]: React.RefObject<HTMLButtonElement> },
+      ),
+    [],
   )
-
-  const currentIndex = data.findIndex((item) => item.id === current)
-
-  const currentCoordinates = itemsCoordinates?.[currentIndex] as coodinates
-
-  const refs = useMemo(() => data.map(() => createRef<HTMLButtonElement>()), [])
 
   function scrollToId(id: string) {
     const element = document.getElementById(id)
@@ -96,17 +108,17 @@ export function Root() {
   }
 
   useEffect(() => {
-    const coordinates: coodinates[] = []
-    refs.forEach((ref) => {
+    const coordinates: CoordinatesState = {}
+    Object.entries(refs).forEach(([id, ref]) => {
       if (ref.current) {
         const offSetWidth = ref.current.offsetWidth
         const offSetHeight = ref.current.offsetHeight
         const offSetLeft = ref.current.offsetLeft
-        coordinates.push({
+        coordinates[id] = {
           x: offSetLeft,
           width: offSetWidth,
           height: offSetHeight,
-        })
+        }
       }
     })
     setItemsCoordinates(coordinates)
@@ -123,7 +135,7 @@ export function Root() {
           ':after': {
             backgroundPositionX: getBackgroundPositionMenu(
               data.length,
-              currentIndex,
+              data.findIndex((item) => item.id === current),
             ),
             transition: 'background-position-x 0.6s ease-in-out',
           },
@@ -139,7 +151,7 @@ export function Root() {
             <Item
               active={item.id === current}
               key={index}
-              ref={refs[index]}
+              ref={refs[item.id]}
               onChange={() => {
                 setCurrent(item.id)
                 scrollToId(item.id)
