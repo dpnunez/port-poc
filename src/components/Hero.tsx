@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface coodinates {
   x: number
@@ -14,85 +14,13 @@ interface coodinates {
 type StateType = { [key: string]: coodinates }
 
 export function Root() {
-  const [coordinates, setCoordinates] = useState<StateType>({})
-  const [current, setCurrent] = useState<string>('lastname')
-
-  const currentCoordinates = coordinates?.[current] as coodinates
-
-  const handleItemsCoordinates = useCallback(
-    (ref: HTMLElement, itemId: string) => {
-      if (ref) {
-        console.dir(ref)
-        const x = ref.offsetLeft
-        const y = ref.offsetTop
-        const height = ref.getBoundingClientRect()?.height
-        const width = ref.getBoundingClientRect()?.width
-        setCoordinates((prev) => ({
-          ...prev,
-          [itemId]: { x, y, width, height },
-        }))
-      }
-    },
-    [],
-  )
-
-  useEffect(() => {
-    if (Object.keys(coordinates).length) {
-      setInterval(() => {
-        setCurrent(() => {
-          const keys = Object.keys(coordinates)
-          const randomIndex = Math.floor(Math.random() * keys.length)
-          const randomKey = keys[randomIndex]
-          return randomKey
-        })
-      }, 4000)
-    }
-  }, [coordinates])
-
-  const t = useRef<HTMLButtonElement>(null)
-
   return (
     <div
       className="min-h-[80vh] flex flex-col items-center justify-center max-w-full overflow-hidden"
       id="hero"
     >
-      <div className="flex gap-2 flex-col relative">
-        <EditorSquare {...currentCoordinates} />
-        <div className="flex gap-4 items-center">
-          <Magnifier />
-          <FirstName />
-          <motion.h1
-            onClick={() => setCurrent('lastname')}
-            ref={(ref) =>
-              handleItemsCoordinates(ref as HTMLElement, 'lastname')
-            }
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{
-              duration: 1,
-            }}
-            className="text-6xl font-extrabold"
-          >
-            Núñez
-          </motion.h1>
-        </div>
-
-        <h2 className="text-4xl font-thin">
-          <motion.span
-            onClick={() => setCurrent('front')}
-            ref={(ref) => handleItemsCoordinates(ref as HTMLElement, 'front')}
-          >
-            Frontend Developer
-          </motion.span>{' '}
-          &{' '}
-          <motion.span
-            onClick={() => setCurrent('cs')}
-            ref={(ref) => handleItemsCoordinates(ref as HTMLElement, 'cs')}
-          >
-            Computer Science Enthusiast
-          </motion.span>
-        </h2>
-      </div>
+      <Headline />
+      <Description />
       <Background />
     </div>
   )
@@ -101,7 +29,7 @@ export function Root() {
 function Background() {
   return (
     <>
-      <div className="bg-hero-highlight absolute w-2/3 h-2/3 opacity-[0.04] pointer-events-none rotate-12" />
+      <div className="bg-white absolute w-96 h-full blur-[100px] opacity-[0.05] pointer-events-none -rotate-45" />
       <Image
         alt="background"
         src="/background-wave.svg"
@@ -115,46 +43,31 @@ function Background() {
 }
 
 function FirstName() {
-  const icon = {
-    hidden: {
-      strokeDashoffset: -900,
-      fill: 'rgba(255, 255, 255, 0)',
-    },
-    visible: {
-      strokeDashoffset: 0,
-    },
-  }
-
   return (
-    <svg
-      width="188"
-      height="73"
-      viewBox="0 0 188 73"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <text
-        fill="white"
-        fillOpacity="0"
-        stroke="white"
-        strokeLinejoin="round"
-        style={{ whiteSpace: 'pre' }}
-        fontFamily="Inter"
-        fontSize="60"
-        fontWeight="800"
-        letterSpacing="0em"
+    <div className="inline-flex relative mr-5">
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 1,
+        }}
+        className="text-stone-950 z-10"
       >
-        <motion.tspan
-          variants={icon}
-          initial="hidden"
-          animate="visible"
-          x="0"
-          y="58.3182"
-        >
-          Daniel
-        </motion.tspan>
-      </text>
-    </svg>
+        Daniel
+      </motion.span>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 1,
+          delay: 0.6,
+        }}
+        className="absolute text-transparent"
+        style={{ WebkitTextStroke: '2px #fff' }}
+      >
+        Daniel
+      </motion.span>
+    </div>
   )
 }
 
@@ -203,10 +116,10 @@ function EditorSquare({ x, width, height, y }: coodinates) {
         }}
         className="ring-1 ring-zinc-700 absolute pointer-events-none opacity-0 backdrop-brightness-150"
       >
-        <div className="h-2 w-2 bg-zinc-200 absolute -top-1 -left-1" />
-        <div className="h-2 w-2 bg-zinc-200 absolute -top-1 -right-1" />
-        <div className="h-2 w-2 bg-zinc-200 absolute -bottom-1 -left-1" />
-        <div className="h-2 w-2 bg-zinc-200 absolute -bottom-1 -right-1" />
+        <div className="h-[5px] w-[5px] bg-zinc-200 absolute ring-1 ring-zinc-700 -top-1 -left-1" />
+        <div className="h-[5px] w-[5px] bg-zinc-200 absolute ring-1 ring-zinc-700 -top-1 -right-1" />
+        <div className="h-[5px] w-[5px] bg-zinc-200 absolute ring-1 ring-zinc-700 -bottom-1 -left-1" />
+        <div className="h-[5px] w-[5px] bg-zinc-200 absolute ring-1 ring-zinc-700 -bottom-1 -right-1" />
         <motion.p
           animate={{
             y: y > 10 ? height + 10 : -25,
@@ -222,5 +135,106 @@ function EditorSquare({ x, width, height, y }: coodinates) {
         </motion.p>
       </motion.span>
     </>
+  )
+}
+
+function Headline() {
+  const [coordinates, setCoordinates] = useState<StateType>({})
+  const [current, setCurrent] = useState<string>('lastname')
+
+  const currentCoordinates = coordinates?.[current] as coodinates
+
+  const handleItemsCoordinates = useCallback(
+    (ref: HTMLElement, itemId: string) => {
+      if (ref) {
+        console.dir(ref)
+        const x = ref.offsetLeft
+        const y = ref.offsetTop
+        const height = ref.getBoundingClientRect()?.height
+        const width = ref.getBoundingClientRect()?.width
+        setCoordinates((prev) => ({
+          ...prev,
+          [itemId]: { x, y, width, height },
+        }))
+      }
+    },
+    [],
+  )
+
+  useEffect(() => {
+    if (Object.keys(coordinates).length) {
+      setInterval(() => {
+        setCurrent(() => {
+          const keys = Object.keys(coordinates)
+          const randomIndex = Math.floor(Math.random() * keys.length)
+          const randomKey = keys[randomIndex]
+          return randomKey
+        })
+      }, 4000)
+    }
+  }, [coordinates])
+  return (
+    <div className="flex gap-2 flex-col relative">
+      <EditorSquare {...currentCoordinates} />
+      <div className="flex gap-4 items-center mx-auto">
+        <Magnifier />
+        <h1 className="text-6xl font-extrabold cursor-pointer">
+          <FirstName />
+          <motion.span
+            onClick={() => setCurrent('lastname')}
+            ref={(ref) =>
+              handleItemsCoordinates(ref as HTMLElement, 'lastname')
+            }
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1,
+            }}
+            className="text-6xl font-extrabold cursor-pointer"
+          >
+            Núñez
+          </motion.span>
+        </h1>
+      </div>
+
+      <h2 className="text-4xl font-thin cursor-pointer mx-auto">
+        <motion.span
+          onClick={() => setCurrent('front')}
+          ref={(ref) => handleItemsCoordinates(ref as HTMLElement, 'front')}
+        >
+          Frontend Developer
+        </motion.span>{' '}
+        &{' '}
+        <motion.span
+          onClick={() => setCurrent('cs')}
+          ref={(ref) => handleItemsCoordinates(ref as HTMLElement, 'cs')}
+        >
+          Computer Science Enthusiast
+        </motion.span>
+      </h2>
+    </div>
+  )
+}
+
+function Description() {
+  return (
+    <motion.p
+      initial={{
+        opacity: 0,
+        y: 10,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        delay: 1,
+        duration: 0.5,
+      }}
+      className="text-zinc-400 mt-5 max-w-md text-center text-lg italic"
+    >
+      &quot;Merging design with code to craft seamless digital experiences. Dive
+      in to explore my web creations.&quot;
+    </motion.p>
   )
 }
