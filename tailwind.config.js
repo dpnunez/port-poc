@@ -8,6 +8,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: ({ theme }) => ({
+        'line-details':
+          'linear-gradient(var(--angle, 90deg),#d9d9d9 -1.53%,transparent -1.52%,hsla(0,0%,100%,.5) var(--gradient-fill,0),transparent 100%)',
         'hero-highlight':
           'radial-gradient(ellipse farthest-side at 51% 50%, rgba(255, 255, 255, 1) 0.3%, rgba(255, 255, 255, 1) 13.3%, rgba(0, 0, 0, 0) 77.5%)',
         'hero-vintage':
