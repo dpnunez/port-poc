@@ -39,6 +39,7 @@ function Cards() {
       <Cursor />
       <Details />
       <Card
+        href="https://www.nav9.tech/"
         title="NAV9 - Tech Solving Partners"
         place="Pelotas"
         role="Front-End Developer"
@@ -48,6 +49,7 @@ function Cards() {
         Nav9
       </Card>
       <Card
+        href="https://wp.ufpel.edu.br/computacao/"
         title="Universidade Federal de Pelotas"
         place="Pelotas"
         role="Computer Science Student"
@@ -91,13 +93,18 @@ interface CardProps {
   bgImage?: string
   role: string
   place: string
+  href?: string
 }
 
-function Card({ role, place, image, title, bgImage }: CardProps) {
+function Card({ role, place, image, title, bgImage, href }: CardProps) {
   return (
-    <div className="flex-1 flex flex-col relative p-3 ring-1 ring-stone-600 rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 ">
+    <a
+      target="_blank"
+      href={href}
+      className="cursor-pointer flex-1 flex flex-col relative p-3 ring-1 ring-stone-600 rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 "
+    >
       <div
-        className="w-full rounded-xl flex-1 absolute left-0 blur-xl h-[320px] opacity-30 "
+        className="w-full rounded-xl flex-1 absolute left-0 blur-xl h-[320px] opacity-30 pointer-events-none"
         style={{
           background: bgImage,
         }}
@@ -111,7 +118,7 @@ function Card({ role, place, image, title, bgImage }: CardProps) {
         />
       </div>
       <div
-        className="relative w-full rounded-xl flex-1 backdrop-blur-lg"
+        className="relative w-full rounded-xl flex-1 pointer-events-none"
         style={{
           background: bgImage,
         }}
@@ -133,7 +140,7 @@ function Card({ role, place, image, title, bgImage }: CardProps) {
           <span>{place}</span>
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 

@@ -21,7 +21,7 @@ export function Root() {
   return (
     <div
       ref={containerRef}
-      className="min-h-[80vh] flex flex-col items-center justify-center max-w-full overflow-hidden"
+      className="min-h-[80vh] flex flex-col items-center justify-center max-w-full"
       id="hero"
     >
       <Headline />
