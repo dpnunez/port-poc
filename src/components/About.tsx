@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 'use client'
 
@@ -47,9 +46,7 @@ function Cards() {
         role="Front-End Developer"
         image="/logo_nav9_white.svg"
         bgImage="rgb(226, 253, 96)"
-      >
-        Nav9
-      </Card>
+      />
       <Card
         href="https://wp.ufpel.edu.br/computacao/"
         title="Universidade Federal de Pelotas"
@@ -57,9 +54,15 @@ function Cards() {
         role="Computer Science Student"
         image="/logo_ufpel.svg"
         bgImage="white"
-      >
-        UFPEL
-      </Card>
+      />
+      <Card
+        href="http://pelotas.ifsul.edu.br/ensino/cursos-tecnicos/eletronica"
+        title="IFSul (aka CEFET)"
+        place="Pelotas"
+        role="Electronic Student"
+        image="/ifsul.svg"
+        bgImage="white"
+      />
     </div>
   )
 }
@@ -135,7 +138,7 @@ function Card({ role, place, image, title, bgImage, href }: CardProps) {
       </div>
       <div className="flex justify-between mt-3">
         <div className="flex flex-col">
-          <span>{title}</span>
+          <span className="font-bold">{title}</span>
           <span>{role}</span>
         </div>
         <div className="mt-auto">

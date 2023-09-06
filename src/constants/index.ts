@@ -16,8 +16,8 @@ export const menuData = [
     index: 1,
   },
   {
-    label: 'Projects',
-    id: 'projects',
+    label: 'Meta Stack',
+    id: 'meta',
     index: 2,
   },
   {

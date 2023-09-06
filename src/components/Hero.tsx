@@ -1,22 +1,20 @@
 'use client'
 
-import { useSectionInScreen } from '@/hooks'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-interface coodinates {
+interface coordinates {
   x: number
   y: number
   width: number
   height: number
 }
 
-type StateType = { [key: string]: coodinates }
+type StateType = { [key: string]: coordinates }
 
 export function Root() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const teste = useSectionInScreen(containerRef, 'hero')
 
   return (
     <div
@@ -40,7 +38,7 @@ function Background() {
         src="/background-wave.svg"
         fill
         className="pointer-events-none -z-10"
-        style={{ objectFit: 'cover', opacity: 0.05 }}
+        style={{ objectFit: 'cover', opacity: 0.15 }}
       />
       <div className="absolute h-screen w-full bg-hero-vintage top-0 pointer-events-none -z-10" />
     </>
@@ -98,7 +96,7 @@ function Magnifier() {
   )
 }
 
-function EditorSquare({ x, width, height, y }: coodinates) {
+function EditorSquare({ x, width, height, y }: coordinates) {
   return (
     <>
       <motion.span
@@ -147,7 +145,7 @@ function Headline() {
   const [coordinates, setCoordinates] = useState<StateType>({})
   const [current, setCurrent] = useState<string>('lastname')
 
-  const currentCoordinates = coordinates?.[current] as coodinates
+  const currentCoordinates = coordinates?.[current] as coordinates
 
   const handleItemsCoordinates = useCallback(
     (ref: HTMLElement, itemId: string) => {
