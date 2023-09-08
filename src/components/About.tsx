@@ -11,11 +11,8 @@ export function Root() {
   useSectionInScreen(containerRef, 'about')
 
   return (
-    <div className="container">
-      <div
-        id="about"
-        className=" max-w-6xl flex flex-col h-screen mt-52 mx-auto"
-      >
+    <section className="container">
+      <div id="about" className="flex flex-col mt-52 mx-auto">
         <div ref={containerRef} className="max-w-4xl mb-10">
           <h1 className="text-5xl font-bold mb-6 text-zinc-100">
             A little about myself
@@ -30,13 +27,13 @@ export function Root() {
         </div>
         <Cards />
       </div>
-    </div>
+    </section>
   )
 }
 
 function Cards() {
   return (
-    <div className="container h-96 relative flex gap-8 mt-10 ">
+    <div className="container h-[1000px] relative flex flex-col gap-8 mt-10 md:flex-row md:h-96">
       <Cursor />
       <Details />
       <Card

@@ -5,7 +5,15 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    {
+      pattern: /(text|bg)-(red|green|blue|orange|cyan)-(500)/,
+    },
+  ],
   theme: {
+    container: {
+      padding: '2rem',
+    },
     extend: {
       backgroundImage: ({ theme }) => ({
         'line-details':

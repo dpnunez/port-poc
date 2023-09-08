@@ -17,15 +17,15 @@ export function Root() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div
+    <section
       ref={containerRef}
-      className="min-h-[80vh] flex flex-col items-center justify-center max-w-full"
+      className="min-h-[75vh] flex flex-col items-center justify-center max-w-full"
       id="hero"
     >
       <Headline />
       <Description />
       <Background />
-    </div>
+    </section>
   )
 }
 
@@ -200,7 +200,7 @@ function Headline() {
         </h1>
       </div>
 
-      <h2 className="text-4xl font-thin cursor-pointer mx-auto">
+      <h2 className="text-4xl font-thin cursor-pointer mx-auto text-center">
         <motion.span
           onClick={() => setCurrent('front')}
           ref={(ref) => handleItemsCoordinates(ref as HTMLElement, 'front')}

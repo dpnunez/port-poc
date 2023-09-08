@@ -17,7 +17,7 @@ export const menuData = [
   },
   {
     label: 'Meta Stack',
-    id: 'meta',
+    id: 'stack',
     index: 2,
   },
   {
